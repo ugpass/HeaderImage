@@ -7,6 +7,9 @@
 //
 
 #import "UGViewController.h"
+#import "HMObjcSugar.h"
+//@import AFNetworking;
+#import "YYWebImage.h"
 
 #define kHEADERHEIGHT 200
 
@@ -16,6 +19,10 @@ static NSString *identifier = @"cellID";
 @end
 
 @implementation UGViewController
+{
+    UIView              *_headerView;
+    UIImageView         *_headerImageView;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -40,9 +47,25 @@ static NSString *identifier = @"cellID";
 
 - (void)prepareHeaderView
 {
-    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), kHEADERHEIGHT)];
-    headerView.backgroundColor = [UIColor brownColor];
-    [self.view addSubview:headerView];
+    _headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), kHEADERHEIGHT)];
+    _headerView.backgroundColor = [UIColor hm_colorWithHex:0xF9F9F9];
+    [self.view addSubview:_headerView];
+    
+    _headerImageView = [[UIImageView alloc] initWithFrame:_headerView.bounds];
+    _headerView.backgroundColor = [UIColor hm_colorWithHex:0x000033];
+    [_headerView addSubview:_headerImageView];
+    
+    
+    _headerImageView.contentMode = UIViewContentModeScaleAspectFill;
+    _headerImageView.clipsToBounds = YES;
+    
+    
+    NSURL *url = [NSURL URLWithString:@"http://www.who.int/campaigns/immunization-week/2015/large-web-banner.jpg?ua=1"];
+    //AFN加载图片
+//    [headerImageView setImageWithURL:url];
+    
+    //YYWebImage加载图片
+    [_headerImageView yy_setImageWithURL:url options:YYWebImageOptionShowNetworkActivity];
 }
 
 - (void)prepareTableView
@@ -74,6 +97,29 @@ static NSString *identifier = @"cellID";
 
     return cell;
 
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    CGFloat offset = scrollView.contentInset.top + scrollView.contentOffset.y;
+    if (offset <= 0) {
+        //放大
+        _headerView.hm_y = 0;
+        _headerView.hm_height = kHEADERHEIGHT - offset;
+        _headerImageView.hm_height = _headerView.hm_height;
+    }else{
+        //整体上移
+        _headerView.hm_height = kHEADERHEIGHT;
+        _headerImageView.hm_height = _headerView.hm_height;
+        //设置headerView 最小y值
+        CGFloat min = kHEADERHEIGHT - 64;
+        
+        _headerView.hm_y = -MIN(min, offset);
+        //设置透明度
+        CGFloat progress = 1 - offset / min;
+        _headerImageView.alpha = progress;
+        
+    }
 }
 
 - (void)didReceiveMemoryWarning {

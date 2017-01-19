@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "6A0048907E0A95A4AE99FC13E5E20B19A87D6470",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "DD2C89BE9CE8954A80BC5C2D87ADDCF8837A61C5" : 9223372036854775807,
+    "6A0048907E0A95A4AE99FC13E5E20B19A87D6470" : 9223372036854775807
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "84FC03A2-7C2F-430A-B4A8-A1AF984FC81D",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "DD2C89BE9CE8954A80BC5C2D87ADDCF8837A61C5" : "HeaderImage\/test\/ObjcSugar\/",
+    "6A0048907E0A95A4AE99FC13E5E20B19A87D6470" : "HeaderImage\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "HeaderImage",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "HeaderImage.xcworkspace",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/ugpass\/HeaderImage.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "6A0048907E0A95A4AE99FC13E5E20B19A87D6470"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/CodeJCSON\/ObjcSugar.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "DD2C89BE9CE8954A80BC5C2D87ADDCF8837A61C5"
+    }
+  ]
+}
