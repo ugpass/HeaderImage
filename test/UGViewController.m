@@ -22,12 +22,15 @@ static NSString *identifier = @"cellID";
 {
     UIView              *_headerView;
     UIImageView         *_headerImageView;
+    UIView              *_lineView;
+    UIStatusBarStyle    statusBarStyle;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor orangeColor];
+    statusBarStyle = UIStatusBarStyleLightContent;
     [self prepareTableView];
     [self prepareHeaderView];
 }
@@ -42,7 +45,7 @@ static NSString *identifier = @"cellID";
 
 - (UIStatusBarStyle)preferredStatusBarStyle
 {
-    return UIStatusBarStyleLightContent;
+    return statusBarStyle;
 }
 
 - (void)prepareHeaderView
@@ -52,12 +55,18 @@ static NSString *identifier = @"cellID";
     [self.view addSubview:_headerView];
     
     _headerImageView = [[UIImageView alloc] initWithFrame:_headerView.bounds];
-    _headerView.backgroundColor = [UIColor hm_colorWithHex:0x000033];
+    _headerView.backgroundColor = [UIColor hm_colorWithHex:0xF9F9F9];
     [_headerView addSubview:_headerImageView];
     
     
     _headerImageView.contentMode = UIViewContentModeScaleAspectFill;
     _headerImageView.clipsToBounds = YES;
+    
+    //1个像素的高度
+    CGFloat lineHeight = 1 / [UIScreen mainScreen].scale;
+    _lineView = [[UIView alloc] initWithFrame:CGRectMake(0, kHEADERHEIGHT - lineHeight, _headerView.hm_width, lineHeight)];
+    _lineView.backgroundColor = [UIColor lightGrayColor];
+    [_headerView addSubview:_lineView];
     
     
     NSURL *url = [NSURL URLWithString:@"http://www.who.int/campaigns/immunization-week/2015/large-web-banner.jpg?ua=1"];
@@ -106,20 +115,31 @@ static NSString *identifier = @"cellID";
         //放大
         _headerView.hm_y = 0;
         _headerView.hm_height = kHEADERHEIGHT - offset;
-        _headerImageView.hm_height = _headerView.hm_height;
+        
+        _headerImageView.alpha = 1;
+        
     }else{
         //整体上移
         _headerView.hm_height = kHEADERHEIGHT;
-        _headerImageView.hm_height = _headerView.hm_height;
         //设置headerView 最小y值
         CGFloat min = kHEADERHEIGHT - 64;
         
         _headerView.hm_y = -MIN(min, offset);
         //设置透明度
-        CGFloat progress = 1 - offset / min;
+        CGFloat progress = 1 - (offset / min);
+        NSLog(@"%f", progress);
         _headerImageView.alpha = progress;
         
+        //设置状态栏
+        statusBarStyle = (progress < 0.5) ? UIStatusBarStyleDefault : UIStatusBarStyleLightContent;
+        //主动更新状态栏
+        [self.navigationController setNeedsStatusBarAppearanceUpdate];
+        
     }
+    
+    _headerImageView.hm_height = _headerView.hm_height;
+    _lineView.hm_y = _headerImageView.hm_height - _lineView.hm_height;
+
 }
 
 - (void)didReceiveMemoryWarning {
